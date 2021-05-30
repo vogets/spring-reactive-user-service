@@ -31,33 +31,3 @@ spec:
                     name: user-r2dbc-config
                     key: spring.r2dbc.password
           image: vogetisameer12/spring-reactive-user-service:latest
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: spring-reactive-user-service
-spec:
-  ports:
-    - name: http
-      targetPort: 8080
-      port: 8080
-  selector:
-    app: spring-reactive-user-service-deployment
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: reactive-product-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.frontend.rule.type: PathPrefixStrip
-spec:
-  rules:
-    - host: oam.cluster-01.company.com
-      http:
-        paths:
-          - path: /user
-            backend:
-              serviceName: spring-reactive-user-service
-              servicePort: http
